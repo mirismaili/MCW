@@ -21,7 +21,7 @@ import React from 'react'
 import Chart from '../components/Chart'
 import Deposits from '../components/Deposits'
 import {mainListItems, secondaryListItems} from '../components/listItems'
-import Orders from '../components/Orders'
+import Transactions from '../components/Transactions'
 
 function Copyright() {
 	return (
@@ -187,9 +187,7 @@ export default function Dashboard() {
 							</Grid>
 							{/* Recent Orders */}
 							<Grid item xs={12}>
-								<Paper className={classes.paper}>
-									<Orders/>
-								</Paper>
+								<Transactions/>
 							</Grid>
 						</Grid>
 						<Box pt={4}>
