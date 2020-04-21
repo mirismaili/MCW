@@ -46,14 +46,13 @@ const iranSansFamily = iranSansVariants.map(({weight, local, url}) => ({
 	//unicodeRange: 'U+0600-08FF', //'U+0628-0651, U+067E, U+0686, U+0698, U+06A9, U+06AF, U+06C0, U+06CC, U+06F0-06F9',
 }))
 
-console.log(iranSansFamily)
-
-export const start = 'left'
-export const end = 'right'
+// export const start = 'left'
+// export const end = 'right'
 
 //const defaultTheme = createMuiTheme()
 
 export const theme = createMuiTheme({
+	direction: 'rtl',
 	typography: {
 		// caption: {
 		// 	fontWeight: 'bold',
