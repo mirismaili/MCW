@@ -1,4 +1,5 @@
 import {green, red, blue, orange} from '@material-ui/core/colors'
+import {faIR} from '@material-ui/core/locale'
 import {createMuiTheme} from '@material-ui/core/styles'
 import iranSansWoff2 from './fonts/IRANSansWeb.woff2'
 import iranSansBoldWoff2 from './fonts/IRANSansWeb_Bold.woff2'
@@ -94,6 +95,6 @@ export const theme = createMuiTheme({
 			},
 		}
 	},
-})
+}, faIR)
 
 export default theme

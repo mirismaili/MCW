@@ -1,4 +1,4 @@
-import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box'
 import {withStyles} from '@material-ui/core/styles'
 import TableCell from '@material-ui/core/TableCell'
 import clsx from 'clsx'
@@ -151,8 +151,8 @@ const sample = [
 	['ساینا', 356, 16.0, 49, 3.9],
 ]
 
-function createData(id, symbol, volume, uPrice, transactionValue, remindedCash) {
-	return {id, symbol, volume, uPrice, transactionValue, remindedCash}
+function createData(id, symbol, volume, uPrice, cashValue, remindedCash) {
+	return {id, symbol, volume, uPrice, cashValue, remindedCash}
 }
 
 const rows = []
@@ -162,9 +162,9 @@ for (let i = 0; i < 200; i++) {
 	rows.push(createData(i, ...randomSelection))
 }
 
-export default function Transactions() {
+export default function TransactionsTable() {
 	return (
-			<Paper style={{height: 400, width: '100%', padding: '8px'}}>
+			<Box flexGrow={1}>
 				<VirtualizedTable
 						rowCount={rows.length}
 						rowGetter={({index}) => rows[index]}
@@ -188,8 +188,8 @@ export default function Transactions() {
 							},
 							{
 								width: 120,
-								label: 'ارزش تراکنش',
-								dataKey: 'transactionValue',
+								label: 'ارزش نقدی',
+								dataKey: 'cashValue',
 								numeric: true,
 							},
 							{
@@ -200,6 +200,6 @@ export default function Transactions() {
 							},
 						]}
 				/>
-			</Paper>
+			</Box>
 	)
 }
