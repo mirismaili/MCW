@@ -1,4 +1,4 @@
-import {StylesProvider, jssPreset, ThemeProvider} from '@material-ui/core/styles'
+import {jssPreset, StylesProvider, ThemeProvider} from '@material-ui/core/styles'
 import {create} from 'jss'
 import rtl from 'jss-rtl'
 import React, {Component} from 'react'

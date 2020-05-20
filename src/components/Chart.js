@@ -1,5 +1,5 @@
 import React from 'react'
-import {LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer} from 'recharts'
+import {Label, Line, LineChart, ResponsiveContainer, XAxis, YAxis} from 'recharts'
 import Title from './Title'
 
 // Generate Sales Data

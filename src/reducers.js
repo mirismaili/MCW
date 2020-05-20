@@ -4,7 +4,7 @@
  */
 
 import {combineReducers} from 'redux'
-import {SIGNING_IN, MARKET_PULSE, infiniteProgress,} from './actions'
+import {infiniteProgress, MARKET_PULSE, SIGNING_IN,} from './actions'
 
 function signingIn(state = {progress: infiniteProgress.DETECTING_STATE, userId: -1}, action) {
 	switch (action.type) {
