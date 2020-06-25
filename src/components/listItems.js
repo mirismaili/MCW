@@ -4,22 +4,24 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import TransactionsIcon from '@material-ui/icons/Toc'
+import WatchListIcon from '@material-ui/icons/Search'
 import React from 'react'
+import {Link as RouterLink} from 'react-router-dom'
 
 export const mainListItems = (
 		<div>
-			<ListItem button>
+			<ListItem button component={RouterLink} to="/">
 				<ListItemIcon>
 					<TransactionsIcon/>
 				</ListItemIcon>
 				<ListItemText primary="تراکنش‌ها"/>
 			</ListItem>
-			{/*<ListItem button>*/}
-			{/*	<ListItemIcon>*/}
-			{/*		<ShoppingCartIcon/>*/}
-			{/*	</ListItemIcon>*/}
-			{/*	<ListItemText primary="Orders"/>*/}
-			{/*</ListItem>*/}
+			<ListItem button component={RouterLink} to="/watch">
+				<ListItemIcon>
+					<WatchListIcon/>
+				</ListItemIcon>
+				<ListItemText primary="دیده‌بان"/>
+			</ListItem>
 			{/*<ListItem button>*/}
 			{/*	<ListItemIcon>*/}
 			{/*		<PeopleIcon/>*/}

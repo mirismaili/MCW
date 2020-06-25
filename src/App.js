@@ -3,9 +3,12 @@ import {create} from 'jss'
 import rtl from 'jss-rtl'
 import React, {Component} from 'react'
 import {Provider} from 'react-redux'
-import configureStore from '../configureStore'
-import {theme} from '../theme'
-import Dashboard from './Dashboard'
+import {Route} from 'react-router-dom'
+import {ConnectedRouter} from 'connected-react-router'
+
+import {theme} from './theme'
+import Dashboard from './components/Dashboard'
+import configureStore, {history} from './configureStore'
 
 /**
  * Created on 1398/10/23 (2020/1/13).
@@ -13,15 +16,20 @@ import Dashboard from './Dashboard'
  */
 
 const store = configureStore()
+
 const jss = create({plugins: [...jssPreset().plugins, rtl()]})
 
-export default class Root extends Component {
+export default class App extends Component {
 	render() {
 		return (
 				<StylesProvider jss={jss}>
 					<ThemeProvider theme={theme}>
 						<Provider store={store}>
-							<Dashboard/>
+							<ConnectedRouter history={history}>
+								<React.StrictMode>
+									<Route component={Dashboard}/>
+								</React.StrictMode>
+							</ConnectedRouter>
 						</Provider>
 					</ThemeProvider>
 				</StylesProvider>

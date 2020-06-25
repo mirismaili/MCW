@@ -1,38 +1,27 @@
-import AppBar from '@material-ui/core/AppBar'
-import Badge from '@material-ui/core/Badge'
-import Container from '@material-ui/core/Container'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Divider from '@material-ui/core/Divider'
-import Drawer from '@material-ui/core/Drawer'
-import IconButton from '@material-ui/core/IconButton'
-import Link from '@material-ui/core/Link'
-import List from '@material-ui/core/List'
-import Paper from '@material-ui/core/Paper'
+import {
+	AppBar,
+	Badge,
+	CssBaseline,
+	Divider,
+	Drawer,
+	IconButton,
+	List,
+	SwipeableDrawer,
+	Toolbar,
+	Typography,
+} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import clsx from 'clsx'
 import React from 'react'
 import {isMobile} from 'react-device-detect'
-import {mainListItems} from '../components/listItems'
-import TransactionsTable from '../components/TransactionsTable'
 
-function Copyright() {
-	return (
-			<Typography variant="body2" color="textSecondary" align="center">
-				{'Copyright © '}
-				<Link color="inherit" href="https://material-ui.com/">
-					Your Website
-				</Link>{' '}
-				{new Date().getFullYear()}
-				{'.'}
-			</Typography>
-	)
-}
+import {mainListItems} from './listItems'
+import {Route, Switch} from 'react-router-dom'
+import {Transactions} from './Transactions'
+import {Watch} from './Watch'
 
 const drawerWidth = 240
 
@@ -167,7 +156,14 @@ function Dashboard() {
 							<MenuIcon/>
 						</IconButton>
 						<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-							تراکنش‌ها
+							<Switch>
+								<Route path="/watch">
+									دیده‌بان
+								</Route>
+								<Route path="/">
+									تراکنش‌ها
+								</Route>
+							</Switch>
 						</Typography>
 						<IconButton color="inherit">
 							<Badge badgeContent={4} color="secondary">
@@ -181,7 +177,8 @@ function Dashboard() {
 						<SwipeableDrawer
 								variant='persistent'
 								classes={drawerClasses}
-								open={open}>
+								open={open}
+						>
 							{drawerContents}
 						</SwipeableDrawer> :
 						<Drawer
@@ -194,29 +191,14 @@ function Dashboard() {
 				
 				<main className={classes.content}>
 					<div className={classes.appBarSpacer}/>
-					<Container maxWidth="lg" className={classes.container}>
-						{/*<Grid container spacing={3}>*/}
-						{/*	<Grid item xs={12} md={8} lg={9}>*/}
-						{/*		<Paper className={classes.fixedHeightPaper}>*/}
-						{/*			<Chart/>*/}
-						{/*		</Paper>*/}
-						{/*	</Grid>*/}
-						{/*	*/}
-						{/*	<Grid item xs={12} md={4} lg={3}>*/}
-						{/*		<Paper className={classes.fixedHeightPaper}>*/}
-						{/*			<Deposits/>*/}
-						{/*		</Paper>*/}
-						{/*	</Grid>*/}
-						{/*</Grid>*/}
-						
-						<Paper className={classes.mainPaper}>
-							<TransactionsTable/>
-						</Paper>
-						
-						{/*<Box pt={4}>*/}
-						{/*	<Copyright/>*/}
-						{/*</Box>*/}
-					</Container>
+					<Switch>
+						<Route path="/watch">
+							<Watch classes={classes}/>
+						</Route>
+						<Route exact path="/">
+							<Transactions classes={classes}/>
+						</Route>
+					</Switch>
 				</main>
 			</div>
 	)

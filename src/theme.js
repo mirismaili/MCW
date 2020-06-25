@@ -63,7 +63,7 @@ export const theme = createMuiTheme({
 			'Roboto',
 			'Helvetica',
 			'Arial',
-			'sans-serif'
+			'sans-serif',
 		].join(',')
 	},
 	overrides: {

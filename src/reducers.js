@@ -1,21 +1,22 @@
+import {combineReducers} from 'redux'
+import {DATA_FETCHED, MARKET_PULSE, SWITCH_ACTIVE_PANEL} from './actions'
+import {connectRouter} from 'connected-react-router'
+
 /**
  * Created on 1398/10/23 (2020/1/13).
  * @author {@link https://mirismaili.github.io S. Mahdi Mir-Ismaili}
  */
 
-import {combineReducers} from 'redux'
-import {infiniteProgress, MARKET_PULSE, SIGNING_IN,} from './actions'
+const fetchedData = (data, action) => {
+	if (action.type !== DATA_FETCHED) return []
+	
+	return data
+}
 
-function signingIn(state = {progress: infiniteProgress.DETECTING_STATE, userId: -1}, action) {
-	switch (action.type) {
-		case SIGNING_IN:
-			return Object.assign({}, state, {
-				progress: action.progress,
-				userId: action.userId,
-			})
-		default:
-			return state
-	}
+const activePanel = (panel, action) => {
+	if (action.type !== SWITCH_ACTIVE_PANEL) return ''
+	
+	return panel
 }
 
 function marketPulse(state = {index1: 0, index2: 0}, action) {
@@ -30,8 +31,9 @@ function marketPulse(state = {index1: 0, index2: 0}, action) {
 	}
 }
 
-const rootReducer = combineReducers({
-	signingIn,
-	marketPulse: marketPulse,
+const createRootReducer = history => combineReducers({
+	router: connectRouter(history),
+	fetchedData,
+	activePanel,
 })
-export default rootReducer
+export default createRootReducer
