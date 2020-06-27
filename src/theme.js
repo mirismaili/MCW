@@ -1,42 +1,50 @@
 import {blue, green, orange, red} from '@material-ui/core/colors'
 import {faIR} from '@material-ui/core/locale'
 import {createMuiTheme} from '@material-ui/core/styles'
-import iranSansWoff2 from './fonts/IRANSansWeb.woff2'
-import iranSansBoldWoff2 from './fonts/IRANSansWeb_Bold.woff2'
-import iranSansLightWoff2 from './fonts/IRANSansWeb_Light.woff2'
-import iranSansMediumWoff2 from './fonts/IRANSansWeb_Medium.woff2'
+import vazirThinWoff2 from './fonts/Vazir-Thin.woff2'
+import vazirLightWoff2 from './fonts/Vazir-Light.woff2'
+import vazirWoff2 from './fonts/Vazir.woff2'
+import vazirMediumWoff2 from './fonts/Vazir-Medium.woff2'
+import vazirBoldWoff2 from './fonts/Vazir-Bold.woff2'
+import vazirBlackWoff2 from './fonts/Vazir-Black.woff2'
 
 /**
  * Created on 1398/10/28 (2020/1/18).
  * @author {@link https://mirismaili.github.io S. Mahdi Mir-Ismaili}
  */
 
-const IRAN_SANS_FONT_FAMILY = 'IRANSans'
+const VAZIR_FONT_FAMILY = 'Vazir'
 
-const iranSansVariants = [{
-// 	weight: 200,
-// 	local: 'IRANSans UltraLight',
-// 	url: iranSansUltraLightWoff2,
-// }, {
-	weight: 300,
-	local: 'IRANSans Light',
-	url: iranSansLightWoff2,
-}, {
-	weight: 400,
-	local: 'IRANSans',
-	url: iranSansWoff2,
-}, {
-	weight: 500,
-	local: 'IRANSans Medium',
-	url: iranSansMediumWoff2,
-}, {
-	weight: 300,
-	local: 'IRANSans Bold',
-	url: iranSansBoldWoff2,
-}]
+const vazirVariants = [
+	{
+		weight: 100,
+		local: 'Vazir Thin',
+		url: vazirThinWoff2,
+	}, {
+		weight: 300,
+		local: 'Vazir Light',
+		url: vazirLightWoff2,
+	}, {
+		weight: 'normal',  // 400
+		local: 'Vazir',
+		url: vazirWoff2,
+	}, {
+		weight: 500,
+		local: 'Vazir Medium',
+		url: vazirMediumWoff2,
+	}, {
+		weight: 'bold',  // 700
+		local: 'Vazir Bold',
+		url: vazirBoldWoff2,
+	}, {
+		weight: 900,
+		local: 'Vazir Black',
+		url: vazirBlackWoff2,
+	},
+]
 
-const iranSansFamily = iranSansVariants.map(({weight, local, url}) => ({
-	fontFamily: IRAN_SANS_FONT_FAMILY,
+const vazirFamily = vazirVariants.map(({weight, local, url}) => ({
+	fontFamily: VAZIR_FONT_FAMILY,
 	fontStyle: 'normal',
 	//fontDisplay: 'swap',
 	fontWeight: weight,
@@ -59,18 +67,18 @@ export const theme = createMuiTheme({
 		// 	fontWeight: 'bold',
 		// },
 		fontFamily: [
-			IRAN_SANS_FONT_FAMILY,
+			VAZIR_FONT_FAMILY,
 			'Roboto',
 			'Helvetica',
 			'Arial',
 			'sans-serif',
-		].join(',')
+		].join(','),
 	},
 	overrides: {
 		MuiCssBaseline: {
 			'@global': {
 				'@font-face': [
-					...iranSansFamily,
+					...vazirFamily,
 				],
 			},
 		},
@@ -93,7 +101,7 @@ export const theme = createMuiTheme({
 				primary: orange[700],
 				secondary: orange[200],
 			},
-		}
+		},
 	},
 }, faIR)
 
