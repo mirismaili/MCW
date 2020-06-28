@@ -120,7 +120,7 @@ const useStyles = makeStyles(theme => {
 	}
 })
 
-function Dashboard() {
+function App() {
 	const classes = useStyles()
 	const [open, setOpen] = React.useState(!isMobile)
 	const handleDrawerOpen = () => {
@@ -204,4 +204,4 @@ function Dashboard() {
 	)
 }
 
-export default Dashboard
+export default App
