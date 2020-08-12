@@ -7,7 +7,7 @@ import {DATA_FETCHED, FETCHING_DATA, FETCHING_FAILED, MARKET_PULSE, ROUTE} from 
  * @author {@link https://mirismaili.github.io S. Mahdi Mir-Ismaili}
  */
 
-const watcherData = (state = {fetching: false, data: []}, action) => {
+const watcherData = (state = {fetching: false}, action) => {
 	switch (action.type) {
 		case DATA_FETCHED:
 			return {...state, fetching: false, data: action.data}

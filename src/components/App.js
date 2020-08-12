@@ -22,7 +22,7 @@ import {connect} from 'react-redux'
 import {mainListItems} from './listItems'
 import {Route, Switch} from 'react-router-dom'
 import {Transactions} from './Transactions'
-import {Watcher} from './Watcher'
+import Watcher from './Watcher'
 import theme from '../theme'
 import {newRoute} from '../actions'
 
