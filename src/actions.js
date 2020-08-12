@@ -4,8 +4,9 @@
  */
 
 export const FETCHING_DATA = 'FETCHING_DATA'
+export const FETCHING_FAILED = 'FETCHING_FAILED'
 export const DATA_FETCHED = 'DATA_FETCHED'
-export const SWITCH_ACTIVE_PANEL = 'SWITCH_ACTIVE_PANEL'
+export const ROUTE = 'ROUTE'
 export const MARKET_PULSE = 'MARKET_PULSE'
 
 export const infiniteProgress = {
@@ -16,10 +17,11 @@ export const infiniteProgress = {
 	IDLE: -3,
 }
 
-function resolvingData(progress) {
-	return {
-		type: FETCHING_DATA,
-		progress,
-	}
-}
+export const fetchingData = () => ({type: FETCHING_DATA})
+
+export const dataFetched = data => ({type: DATA_FETCHED, data})
+
+export const newRoute = route => ({type: ROUTE, route})
+
+export const fetchingFailed = () => ({type: FETCHING_FAILED})
 

@@ -10,24 +10,35 @@ import {
 	Toolbar,
 	Typography,
 } from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import clsx from 'clsx'
 import React from 'react'
 import {isMobile} from 'react-device-detect'
+import {connect} from 'react-redux'
 
 import {mainListItems} from './listItems'
 import {Route, Switch} from 'react-router-dom'
 import {Transactions} from './Transactions'
-import {Watch} from './Watch'
+import {Watcher} from './Watcher'
+import theme from '../theme'
+import {newRoute} from '../actions'
+
+/**
+ * Created on 1398/10/23 (2020/1/13).
+ * @author {@link https://mirismaili.github.io S. Mahdi Mir-Ismaili}
+ */
 
 const drawerWidth = 240
 
-const useStyles = makeStyles(theme => {
-	const paperStyle = {
+const styles = theme => {
+	const paper = {
 		padding: theme.spacing(2),
+	}
+	const linearPaper = {
+		...paper,
 		display: 'flex',
 		overflow: 'auto',
 		flexDirection: 'column',
@@ -107,101 +118,124 @@ const useStyles = makeStyles(theme => {
 			paddingBottom: theme.spacing(4),
 		},
 		fixedHeightPaper: {
-			...paperStyle,
+			...linearPaper,
 			height: 240,
 		},
 		mainPaper: {
-			...paperStyle,
+			...linearPaper,
 			//marginTop: theme.spacing(4),
 			flexGrow: 1,
 			paddingRight: 0,
 			paddingBottom: 0,
 		},
 	}
-})
-
-function App() {
-	const classes = useStyles()
-	const [open, setOpen] = React.useState(!isMobile)
-	const handleDrawerOpen = () => {
-		setOpen(true)
-	}
-	const handleDrawerClose = () => {
-		setOpen(false)
-	}
-	const drawerContents = <>
-		<div className={classes.toolbarIcon}>
-			<IconButton onClick={handleDrawerClose}>
-				<ChevronLeftIcon/>
-			</IconButton>
-		</div>
-		<Divider/>
-		<List>{mainListItems}</List>
-		{/*<Divider/>*/}
-		{/*<List>{secondaryListItems}</List>*/}</>
-	
-	const drawerClasses = {paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)}
-	return (
-			<div className={classes.root}>
-				<CssBaseline/>
-				<AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-					<Toolbar className={classes.toolbar}>
-						<IconButton
-								edge="start"
-								color="inherit"
-								aria-label="open drawer"
-								onClick={handleDrawerOpen}
-								className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-						>
-							<MenuIcon/>
-						</IconButton>
-						<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-							<Switch>
-								<Route path="/watch">
-									دیده‌بان
-								</Route>
-								<Route path="/">
-									تراکنش‌ها
-								</Route>
-							</Switch>
-						</Typography>
-						<IconButton color="inherit">
-							<Badge badgeContent={4} color="secondary">
-								<NotificationsIcon/>
-							</Badge>
-						</IconButton>
-					</Toolbar>
-				</AppBar>
-				
-				{isMobile ?
-						<SwipeableDrawer
-								variant='persistent'
-								classes={drawerClasses}
-								open={open}
-						>
-							{drawerContents}
-						</SwipeableDrawer> :
-						<Drawer
-								variant='persistent'
-								classes={drawerClasses}
-								open={open}>
-							{drawerContents}
-						</Drawer>
-				}
-				
-				<main className={classes.content}>
-					<div className={classes.appBarSpacer}/>
-					<Switch>
-						<Route path="/watch">
-							<Watch classes={classes}/>
-						</Route>
-						<Route exact path="/">
-							<Transactions classes={classes}/>
-						</Route>
-					</Switch>
-				</main>
-			</div>
-	)
 }
 
-export default App
+class App extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			open: !isMobile,
+		}
+	}
+	
+	componentDidMount() {
+		// console.log(this.props.location)
+		// console.log(this.props.action)
+		
+		this.unlisten = this.props.history.listen((location, action) =>
+				this.props.dispatch(newRoute({location, action})),
+		)
+	}
+	
+	componentWillUnmount() {
+		this.unlisten()
+	}
+	
+	render() {
+		const handleDrawerOpen = () => {
+			this.setState({open: true})
+		}
+		const handleDrawerClose = () => {
+			this.setState({open: true})
+		}
+		
+		const {classes} = this.props
+		
+		const drawerContents = <>
+			<div className={classes.toolbarIcon}>
+				<IconButton onClick={handleDrawerClose}>
+					<ChevronLeftIcon/>
+				</IconButton>
+			</div>
+			<Divider/>
+			<List>{mainListItems}</List>
+			{/*<Divider/>*/}
+			{/*<List>{secondaryListItems}</List>*/}</>
+		
+		const drawerClasses = {paper: clsx(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)}
+		return (
+				<div className={classes.root}>
+					<CssBaseline/>
+					<AppBar position="absolute" className={clsx(classes.appBar, this.state.open && classes.appBarShift)}>
+						<Toolbar className={classes.toolbar}>
+							<IconButton
+									edge="start"
+									color="inherit"
+									aria-label="open drawer"
+									onClick={handleDrawerOpen}
+									className={clsx(classes.menuButton, this.state.open && classes.menuButtonHidden)}
+							>
+								<MenuIcon/>
+							</IconButton>
+							<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+								<Switch>
+									<Route path="/watch">
+										دیده‌بان
+									</Route>
+									<Route path="/">
+										تراکنش‌ها
+									</Route>
+								</Switch>
+							</Typography>
+							<IconButton color="inherit">
+								<Badge badgeContent={4} color="secondary">
+									<NotificationsIcon/>
+								</Badge>
+							</IconButton>
+						</Toolbar>
+					</AppBar>
+					
+					{isMobile ?
+							<SwipeableDrawer
+									variant='persistent'
+									classes={drawerClasses}
+									open={this.state.open}
+							>
+								{drawerContents}
+							</SwipeableDrawer> :
+							<Drawer
+									variant='persistent'
+									classes={drawerClasses}
+									open={this.state.open}>
+								{drawerContents}
+							</Drawer>
+					}
+					
+					<main className={classes.content}>
+						<div className={classes.appBarSpacer}/>
+						<Switch>
+							<Route path="/watch">
+								<Watcher classes={classes}/>
+							</Route>
+							<Route exact path="/">
+								<Transactions classes={classes}/>
+							</Route>
+						</Switch>
+					</main>
+				</div>
+		)
+	}
+}
+
+export default connect()(withStyles(styles(theme))(App))
