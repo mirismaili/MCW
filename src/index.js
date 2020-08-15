@@ -1,7 +1,7 @@
 import React from 'react'
 import * as ReactDOM from 'react-dom'
-import {jssPreset, StylesProvider, ThemeProvider} from '@material-ui/core/styles'
-import {Provider} from 'react-redux'
+import {createMuiTheme, jssPreset, StylesProvider, ThemeProvider} from '@material-ui/core/styles'
+import {connect, Provider} from 'react-redux'
 // import {ConnectedRouter, routerMiddleware} from 'connected-react-router'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {create} from 'jss'
@@ -12,9 +12,9 @@ import thunkMiddleware from 'redux-thunk'
 
 import './index.css'
 import * as serviceWorker from './serviceWorker'
-import {theme} from './theme'
 import App from './components/App'
 import rootReducer from './reducers'
+import {locales} from './themes'
 
 /**
  * Created on 1398/10/23 (2020/1/13).
@@ -34,17 +34,21 @@ const store = createStore(
 
 const jss = create({plugins: [...jssPreset().plugins, rtl()]})
 
+const DynamicThemeProvider = connect(state => ({theme: state.theme}))(props =>
+		<ThemeProvider theme={createMuiTheme(props.theme, locales[props.theme.locale])} children={props.children}/>,
+)
+
 ReactDOM.render(
 		<React.StrictMode>
-			<StylesProvider jss={jss}>
-				<ThemeProvider theme={theme}>
-					<Provider store={store}>
+			<Provider store={store}>
+				<StylesProvider jss={jss}>
+					<DynamicThemeProvider>
 						<Router>
 							<Route component={App}/>
 						</Router>
-					</Provider>
-				</ThemeProvider>
-			</StylesProvider>
+					</DynamicThemeProvider>
+				</StylesProvider>
+			</Provider>
 		</React.StrictMode>,
 		document.getElementById('root'),
 )

@@ -7,6 +7,7 @@ import {
 	IconButton,
 	List,
 	SwipeableDrawer,
+	Switch,
 	Toolbar,
 	Typography,
 } from '@material-ui/core'
@@ -20,11 +21,11 @@ import {isMobile} from 'react-device-detect'
 import {connect} from 'react-redux'
 
 import {mainListItems} from './listItems'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch as RouterSwitch} from 'react-router-dom'
 import {Transactions} from './Transactions'
 import Watcher from './Watcher'
-import theme from '../theme'
-import {newRoute} from '../actions'
+import {theme1, theme2} from '../themes'
+import {newRoute, setTheme} from '../actions'
 
 /**
  * Created on 1398/10/23 (2020/1/13).
@@ -189,15 +190,22 @@ class App extends React.Component {
 								<MenuIcon/>
 							</IconButton>
 							<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-								<Switch>
+								<RouterSwitch>
 									<Route path="/watch">
 										دیده‌بان
 									</Route>
 									<Route path="/">
 										تراکنش‌ها
 									</Route>
-								</Switch>
+								</RouterSwitch>
 							</Typography>
+							<Switch onChange={(event, checked) => {
+								const [lang, direction, theme] = checked ? ['en', 'ltr', theme2] : ['fa', 'rtl', theme1]
+								document.documentElement.lang = lang
+								document.documentElement.dir = direction
+								this.props.dispatch(setTheme(theme))
+							}
+							}/>
 							<IconButton color="inherit">
 								<Badge badgeContent={4} color="secondary">
 									<NotificationsIcon/>
@@ -224,18 +232,18 @@ class App extends React.Component {
 					
 					<main className={classes.content}>
 						<div className={classes.appBarSpacer}/>
-						<Switch>
+						<RouterSwitch>
 							<Route path="/watch">
 								<Watcher classes={classes}/>
 							</Route>
 							<Route exact path="/">
 								<Transactions classes={classes}/>
 							</Route>
-						</Switch>
+						</RouterSwitch>
 					</main>
 				</div>
 		)
 	}
 }
 
-export default connect()(withStyles(styles(theme))(App))
+export default connect()(withStyles(styles)(App))

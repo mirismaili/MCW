@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
-import {DATA_FETCHED, FETCHING_DATA, FETCHING_FAILED, MARKET_PULSE, ROUTE} from './actions'
-// import {connectRouter} from 'connected-react-router'
+import {DATA_FETCHED, FETCHING_DATA, FETCHING_FAILED, MARKET_PULSE, ROUTE, THEME} from './actions'
+import {theme1} from './themes'
 
 /**
  * Created on 1398/10/23 (2020/1/13).
@@ -25,6 +25,12 @@ const route = (state = {location: {pathname: '/'}}, action) => {
 	return {...state, ...action.route}
 }
 
+const theme = (state = theme1, action) => {
+	if (action.type !== THEME || state === action.theme) return state
+	
+	return action.theme
+}
+
 function marketPulse(state = {index1: 0, index2: 0}, action) {
 	switch (action.type) {
 		case MARKET_PULSE:
@@ -40,5 +46,6 @@ function marketPulse(state = {index1: 0, index2: 0}, action) {
 const rootReducer = combineReducers({
 	watcherData,
 	route,
+	theme,
 })
 export default rootReducer
